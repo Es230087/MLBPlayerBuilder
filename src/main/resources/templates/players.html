@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>MLB Player Builder</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <h1>Player Table</h1>
+    <div class="row col-md-7 table-responsive">
+
+
+        <form action="#" th:action="@{/playerxls}" method="POST" th:object="${form}">
+
+
+            <table id="playerTable" class="table">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Position</th>
+                    <th>Batting Stance</th>
+                    <th>Throwing Stance</th>
+                    <th>Team Name</th>
+                    <th>Home Runs</th>
+                    <th>Hits</th>
+                    <th>Runs</th>
+                    <th>At Bats</th>
+                    <th>Total Bases</th>
+                    <th>Walks</th>
+                    <th>Strikeouts</th>
+                    <th>Batting Average</th>
+                    <th>Slugging Percentage</th>
+                    <th>On Base Percentage</th>
+                    <th>Pitches Per Plate Appearance</th>
+                    <th>Runs Created</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="player, itemStat: *{playerResourceList}"
+                    th:style="${itemStat.odd} ? 'color: gray' : 'color: blue;'">
+<!--                    <td><input type="checkbox" th:checked="*{playerResourceList[__${itemStat.index}__].isChosen}" th:field="*{playerResourceList[__${itemStat.index}__].isChosen}" /></td>-->
+                    <td><input type="checkbox" th:field="*{playerResourceList[__${itemStat.index}__].chosen}"/></td>
+                    <td><input th:field="*{playerResourceList[__${itemStat.index}__].firstName}" /></td>
+                    <td><input th:field="*{playerResourceList[__${itemStat.index}__].lastName}" /></td>
+                    <td><input th:field="*{playerResourceList[__${itemStat.index}__].position}" /></td>
+                    <td><input th:field="*{playerResourceList[__${itemStat.index}__].batPosition}" /></td>
+                    <td><input th:field="*{playerResourceList[__${itemStat.index}__].throwPosition}" /></td>
+                    <td><input th:field="*{playerResourceList[__${itemStat.index}__].teamName}" /></td>
+                    <td><input th:field="*{playerResourceList[__${itemStat.index}__].homeRuns}" /></td>
+                    <td><input th:field="*{playerResourceList[__${itemStat.index}__].hits}" /></td>
+                    <td><input th:field="*{playerResourceList[__${itemStat.index}__].runs}" /></td>
+                    <td><input th:field="*{playerResourceList[__${itemStat.index}__].atBats}" /></td>
+                    <td><input th:field="*{playerResourceList[__${itemStat.index}__].totalBases}" /></td>
+                    <td><input th:field="*{playerResourceList[__${itemStat.index}__].walks}" /></td>
+                    <td><input th:field="*{playerResourceList[__${itemStat.index}__].strikeouts}" /></td>
+                    <td><input th:field="*{playerResourceList[__${itemStat.index}__].batAvg}" /></td>
+                    <td><input th:field="*{playerResourceList[__${itemStat.index}__].slugPercentage}" /></td>
+                    <td><input th:field="*{playerResourceList[__${itemStat.index}__].onBasePercentage}" /></td>
+                    <td><input th:field="*{playerResourceList[__${itemStat.index}__].pitchesPerPlateAppearance}" /></td>
+                    <td><input th:field="*{playerResourceList[__${itemStat.index}__].runsCreated}" /></td>
+
+                </tr>
+                </tbody>
+            </table>
+
+
+            <input type="submit" id="submitButton" th:value="Save">
+            <input type="reset" id="resetButton" name="reset" th:value="Reset"/>
+        </form>
+    </div>
+</div>
+</body>
+</html>

@@ -1,28 +1,57 @@
 package com.schroeter.mlb.player;
 
 public class PlayerResource {
+    boolean chosen;
     String firstName;
     String lastName;
     String position;
-    String batsSide;
-    String throwSide;
+    String batPosition;
+    String throwPosition;
     String teamName;
 
-    String singles;
-    String doubles;
-    String triples;
-    String homeRuns;
-    String runs;
-    String atBats;
-    String walks;
-    String strikeouts;
-    String batAvg;
-    String slugPercentage;
-    String onBasePercentage;
-
-
+    int homeRuns; //hr
+    int hits; //h
+    int runs; //r
+    int atBats; //ab
+    int totalBases; //tb
+    int walks; //bb
+    int strikeouts; //so
     int heightFeet;
     int heightInches;
+
+    Float batAvg; //avg
+    Float slugPercentage; //slg
+    Float onBasePercentage; //obp
+    Float pitchesPerPlateAppearance; //ppa
+
+    //TB x (H + BB) / (AB + BB)
+    Float runsCreated = (float) totalBases * (((float) hits) + (float) walks) / (((float) atBats) + (float) walks);
+
+
+
+    public Float getPitchesPerPlateAppearance() {
+        return pitchesPerPlateAppearance;
+    }
+
+    public void setPitchesPerPlateAppearance(Float pitchesPerPlateAppearance) {
+        this.pitchesPerPlateAppearance = pitchesPerPlateAppearance;
+    }
+
+    public Float getRunsCreated() {
+        return runsCreated;
+    }
+
+    public void setRunsCreated(Float runsCreated) {
+        this.runsCreated = runsCreated;
+    }
+
+    public boolean isChosen() {
+        return chosen;
+    }
+
+    public void setChosen(boolean chosen) {
+        this.chosen = chosen;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -48,20 +77,20 @@ public class PlayerResource {
         this.position = position;
     }
 
-    public String getBatsSide() {
-        return batsSide;
+    public String getBatPosition() {
+        return batPosition;
     }
 
-    public void setBatsSide(String batsSide) {
-        this.batsSide = batsSide;
+    public void setBatPosition(String batPosition) {
+        this.batPosition = batPosition;
     }
 
-    public String getThrowSide() {
-        return throwSide;
+    public String getThrowPosition() {
+        return throwPosition;
     }
 
-    public void setThrowSide(String throwSide) {
-        this.throwSide = throwSide;
+    public void setThrowPosition(String throwPosition) {
+        this.throwPosition = throwPosition;
     }
 
     public String getTeamName() {
@@ -72,91 +101,67 @@ public class PlayerResource {
         this.teamName = teamName;
     }
 
-    public String getSingles() {
-        return singles;
-    }
-
-    public void setSingles(String singles) {
-        this.singles = singles;
-    }
-
-    public String getDoubles() {
-        return doubles;
-    }
-
-    public void setDoubles(String doubles) {
-        this.doubles = doubles;
-    }
-
-    public String getTriples() {
-        return triples;
-    }
-
-    public void setTriples(String triples) {
-        this.triples = triples;
-    }
-
-    public String getHomeRuns() {
+    public int getHomeRuns() {
         return homeRuns;
     }
 
-    public void setHomeRuns(String homeRuns) {
+    public void setHomeRuns(int homeRuns) {
         this.homeRuns = homeRuns;
     }
 
-    public String getRuns() {
+    public int getRuns() {
         return runs;
     }
 
-    public void setRuns(String runs) {
+    public void setRuns(int runs) {
         this.runs = runs;
     }
 
-    public String getAtBats() {
+    public int getAtBats() {
         return atBats;
     }
 
-    public void setAtBats(String atBats) {
+    public void setAtBats(int atBats) {
         this.atBats = atBats;
     }
 
-    public String getWalks() {
+    public int getWalks() {
         return walks;
     }
 
-    public void setWalks(String walks) {
+    public void setWalks(int walks) {
         this.walks = walks;
     }
 
-    public String getStrikeouts() {
+    public int getStrikeouts() {
         return strikeouts;
     }
 
-    public void setStrikeouts(String strikeouts) {
+    public void setStrikeouts(int strikeouts) {
         this.strikeouts = strikeouts;
     }
 
-    public String getBatAvg() {
+    public Float getBatAvg() {
         return batAvg;
     }
 
-    public void setBatAvg(String batAvg) {
+    public void setBatAvg(Float batAvg) {
         this.batAvg = batAvg;
     }
 
-    public String getSlugPercentage() {
+    public Float getSlugPercentage() {
         return slugPercentage;
     }
 
-    public void setSlugPercentage(String slugPercentage) {
+    public void setSlugPercentage(Float slugPercentage) {
         this.slugPercentage = slugPercentage;
     }
 
-    public String getOnBasePercentage() {
+    public Float getOnBasePercentage() {
         return onBasePercentage;
     }
 
-    public void setOnBasePercentage(String onBasePercentage) {
+    public void setOnBasePercentage(Float onBasePercentage) {
         this.onBasePercentage = onBasePercentage;
     }
 
@@ -174,5 +179,21 @@ public class PlayerResource {
 
     public void setHeightInches(int heightInches) {
         this.heightInches = heightInches;
+    }
+
+    public int getTotalBases() {
+        return totalBases;
+    }
+
+    public void setTotalBases(int totalBases) {
+        this.totalBases = totalBases;
+    }
+
+    public int getHits() {
+        return hits;
+    }
+
+    public void setHits(int hits) {
+        this.hits = hits;
     }
 }
