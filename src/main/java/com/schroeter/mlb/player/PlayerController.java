@@ -6,31 +6,74 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
-import java.util.List;
-
+import java.util.ArrayList;
 
 @Controller
+@SessionAttributes("players")
 public class PlayerController {
 
     @Autowired
     private PlayerService playerService;
 
-    @RequestMapping(path = "/api/player", method = RequestMethod.GET)
-    public PlayerResource player () {
-       return playerService.getPlayer();
-    }
-
     @GetMapping(path = "/players")
-    public String players (Model modelMap) {
-//        modelMap.addAttribute("playerList", playerService.getPlayers());
-        PlayerWrapper playerWrapper = new PlayerWrapper(playerService.getPlayers());
-//        playerWrapper.setPlayerResourceList(playerService.getPlayers());
-        modelMap.addAttribute("form", playerWrapper);
+    public String players (
+    		Model modelMap, 
+    		@ModelAttribute("players") PlayerWrapper playerWrapper) {
+    	
+    	// add players from session attribute to model 
+        if (!playerWrapper.getPlayerResourceList().isEmpty()) {
+        	modelMap.addAttribute("chosenPlayers", playerWrapper);
+        }
+        
+        // add players from viewing team to model
+        TeamBeingViewed teamBeingViewed = new TeamBeingViewed("Some Team", playerService.getTeamRoster("121"));
+        
+        modelMap.addAttribute("teamBeingViewed", teamBeingViewed);
+        
         return "players";
+    }
+    
+    @GetMapping(path = "/players/{teamId}")
+    public String playersWithChosenTeam (
+    		Model modelMap, 
+    		@ModelAttribute("players") PlayerWrapper playerWrapper,
+    		@PathVariable("teamId") String teamId) {
+    	
+    	// add players from session attribute to model 
+        if (!playerWrapper.getPlayerResourceList().isEmpty()) {
+        	modelMap.addAttribute("chosenPlayers", playerWrapper);
+        }
+        
+        // add players from viewing team to model
+        TeamBeingViewed teamBeingViewed = new TeamBeingViewed("Some Team", playerService.getTeamRoster(teamId));
+        
+        modelMap.addAttribute("teamBeingViewed", teamBeingViewed);
+        
+        return "players";
+    }
+    
+    
+    @RequestMapping(path = "/addPlayers", method = RequestMethod.POST)
+    public RedirectView addPlayersToList (
+    		@ModelAttribute TeamBeingViewed players, 
+    		@ModelAttribute("players") PlayerWrapper playerWrapper, 
+    		RedirectAttributes attributes) throws IOException {
+    	
+    	for (PlayerResource player : players.getPlayersOnTeam()) {
+    		if(player.chosen) {
+    			playerWrapper.addPlayerToList(player);
+    		}
+    	}
+
+    	attributes.addFlashAttribute("form", playerWrapper);
+    	
+    	return new RedirectView("/players");
     }
 
     @RequestMapping(path = "/playerxls", method = RequestMethod.POST)
@@ -46,6 +89,15 @@ public class PlayerController {
 
         return new HttpEntity<byte[]>(excelContent, header);
     }
-
+    
+    @ModelAttribute("players")
+    public PlayerWrapper players() {
+        return new PlayerWrapper();
+    }
+    
+    @InitBinder("players")
+	public void configureBindingOfPlayers(WebDataBinder binder) {
+	    binder.setAllowedFields(); // No fields allowed
+	}
 
 }

@@ -2,6 +2,7 @@ package com.schroeter.mlb.player;
 
 public class PlayerResource {
     boolean chosen;
+    String playerId;
     String firstName;
     String lastName;
     String position;
@@ -25,9 +26,7 @@ public class PlayerResource {
     Float pitchesPerPlateAppearance; //ppa
 
     //TB x (H + BB) / (AB + BB)
-    Float runsCreated = (float) totalBases * (((float) hits) + (float) walks) / (((float) atBats) + (float) walks);
-
-
+    Float runsCreated;
 
     public Float getPitchesPerPlateAppearance() {
         return pitchesPerPlateAppearance;
@@ -38,11 +37,10 @@ public class PlayerResource {
     }
 
     public Float getRunsCreated() {
-        return runsCreated;
-    }
-
-    public void setRunsCreated(Float runsCreated) {
-        this.runsCreated = runsCreated;
+    	if (atBats != 0 && walks != 0) {
+    		return (float) totalBases * (((float) hits) + (float) walks) / (((float) atBats) + (float) walks);
+    	}
+        return (float) 0.0;
     }
 
     public boolean isChosen() {
@@ -53,7 +51,15 @@ public class PlayerResource {
         this.chosen = chosen;
     }
 
-    public String getFirstName() {
+    public String getPlayerId() {
+		return playerId;
+	}
+
+	public void setPlayerId(String playerId) {
+		this.playerId = playerId;
+	}
+
+	public String getFirstName() {
         return firstName;
     }
 
@@ -196,4 +202,5 @@ public class PlayerResource {
     public void setHits(int hits) {
         this.hits = hits;
     }
+    
 }

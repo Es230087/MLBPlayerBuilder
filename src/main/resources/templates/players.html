@@ -6,21 +6,159 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/resources/styles/styles.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </head>
 <body>
+<header>
+      <!-- Fixed navbar -->
+      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="/players">MLB Team Builder</a>
+      </nav>
+    </header>
+   
+<main role="main" class=" jumbotron container">
+        
+    <h1>Choose A Team</h1>
+    <div class="row">
+    	<div class="col-md-2">
+    		<a href="/players/138">St. Louis Cardinals</a>
+    		<br />
+    		<a href="/players/104">AZ Diamondbacks</a>
+    		<br />
+    		<a href="/players/144">Atlanta Braves</a>
+    		<br />
+    		<a href="/players/111">Boston Redsox</a>
+    		<br />
+    		<a href="/players/133">Oakland A's</a>
+    		<br />
+    		<a href="/players/136">Seattle Mariners</a>
+    	</div>
+    	<div class="col-md-2">
+    		<a href="/players/110">Baltimore Orioles</a>
+    		<br />
+    		<a href="/players/112">Chicago Cubs</a>
+    		<br />
+    		<a href="/players/145">Chicago White Sox</a>
+    		<br />
+    		<a href="/players/113">Cincinati Reds</a>
+    		<br />
+    		<a href="/players/143">Philadelphia Phillies</a>
+    		<br />
+    		<a href="/players/139">Tampa Bay Rays</a>
+    	</div>
+    	<div class="col-md-2">
+    		<a href="/players/114">Cleveland Indians</a>
+    		<br />
+    		<a href="/players/115">Colorado Rockies</a>
+    		<br />
+    		<a href="/players/116">Detroit Tigers</a>
+    		<br />
+    		<a href="/players/117">Houston Astros</a>
+    		<br />
+    		<a href="/players/134">Pittsburg Pirates</a>
+    		<br />
+    		<a href="/players/140">Texas Rangers</a>
+    	</div>
+    	<div class="col-md-2">
+    		<a href="/players/118">Kansas City Royals</a>
+    		<br />
+    		<a href="/players/108">LA Angels</a>
+    		<br />
+    		<a href="/players/119">LA Dodgers</a>
+    		<br />
+    		<a href="/players/146">Miami Marlins</a>
+    		<br />
+    		<a href="/players/135">San Diego Padres</a>
+    		<br />
+    		<a href="/players/141">Toronto Blue Jays</a>
+    	</div>
+    	<div class="col-md-2">
+    		<a href="/players/158">Milwaukee Brewers</a>
+    		<br />
+    		<a href="/players/142">Minnesota Twins</a>
+    		<br />
+    		<a href="/players/121">NY Mets</a>
+    		<br />
+    		<a href="/players/147">NY Yankees</a>
+    		<br />
+    		<a href="/players/137">SF Giants</a>
+    		<br />
+    		<a href="/players/120">Washington Nationals</a>
+    	</div>
+    </div>
+        
+    <h1>Players To Choose From</h1>
+    <div class="row col-md-12 table-responsive">
 
-<div class="container">
-    <h1>Player Table</h1>
-    <div class="row col-md-7 table-responsive">
+        <form action="#" th:action="@{/addPlayers}" method="POST" th:object="${teamBeingViewed}">
 
+            <div class="form-group">
+            	<table id="playerTable" class="table">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Position</th>
+                    <th>Batting Stance</th>
+                    <th>Throwing Stance</th>
+                    <th>Team Name</th>
+                    <th>Home Runs</th>
+                    <th>Hits</th>
+                    <th>Runs</th>
+                    <th>At Bats</th>
+                    <th>Total Bases</th>
+                    <th>Walks</th>
+                    <th>Strikeouts</th>
+                    <th>Batting Average</th>
+                    <th>Slugging Percentage</th>
+                    <th>On Base Percentage</th>
+                    <th>Pitches Per Plate Appearance</th>
+                    <th>Runs Created</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="player, itemStat: *{playersOnTeam}"
+                    th:style="${itemStat.odd} ? 'color: gray' : 'color: blue;'">
+<!--                    <td><input type="checkbox" th:checked="*{playerResourceList[__${itemStat.index}__].isChosen}" th:field="*{playerResourceList[__${itemStat.index}__].isChosen}" /></td>-->
+                    <td><input type="checkbox" th:field="*{playersOnTeam[__${itemStat.index}__].chosen}"/></td>
+                    <td><input th:field="*{playersOnTeam[__${itemStat.index}__].firstName}" /></td>
+                    <td><input th:field="*{playersOnTeam[__${itemStat.index}__].lastName}" /></td>
+                    <td><input th:field="*{playersOnTeam[__${itemStat.index}__].position}" /></td>
+                    <td><input th:field="*{playersOnTeam[__${itemStat.index}__].batPosition}" /></td>
+                    <td><input th:field="*{playersOnTeam[__${itemStat.index}__].throwPosition}" /></td>
+                    <td><input th:field="*{playersOnTeam[__${itemStat.index}__].teamName}" /></td>
+                    <td><input th:field="*{playersOnTeam[__${itemStat.index}__].homeRuns}" /></td>
+                    <td><input th:field="*{playersOnTeam[__${itemStat.index}__].hits}" /></td>
+                    <td><input th:field="*{playersOnTeam[__${itemStat.index}__].runs}" /></td>
+                    <td><input th:field="*{playersOnTeam[__${itemStat.index}__].atBats}" /></td>
+                    <td><input th:field="*{playersOnTeam[__${itemStat.index}__].totalBases}" /></td>
+                    <td><input th:field="*{playersOnTeam[__${itemStat.index}__].walks}" /></td>
+                    <td><input th:field="*{playersOnTeam[__${itemStat.index}__].strikeouts}" /></td>
+                    <td><input th:field="*{playersOnTeam[__${itemStat.index}__].batAvg}" /></td>
+                    <td><input th:field="*{playersOnTeam[__${itemStat.index}__].slugPercentage}" /></td>
+                    <td><input th:field="*{playersOnTeam[__${itemStat.index}__].onBasePercentage}" /></td>
+                    <td><input th:field="*{playersOnTeam[__${itemStat.index}__].pitchesPerPlateAppearance}" /></td>
+                    <td><input th:field="*{playersOnTeam[__${itemStat.index}__].runsCreated}" /></td>
 
-        <form action="#" th:action="@{/playerxls}" method="POST" th:object="${form}">
+                </tr>
+                </tbody>
+            </table>
+            </div>
+            <button class="btn btn-md btn-primary" type="submit" id="submitButton" th:value="Save">Add Player</button>
+            <input class="btn btn-md btn-warning" type="reset" id="resetButton" name="reset" th:value="Reset"/>
+        </form>
+    </div>
+    
+    <h1>Chosen Players</h1>
+    <div class="row col-md-12 table-responsive">
 
-
-            <table id="playerTable" class="table">
+        <form action="#" th:action="@{/playerxls}" method="POST" th:object="${chosenPlayers}">
+			<div class="form-group">
+				<table id="playerTable" class="table">
                 <thead>
                 <tr>
                     <th></th>
@@ -71,12 +209,17 @@
                 </tr>
                 </tbody>
             </table>
-
-
-            <input type="submit" id="submitButton" th:value="Save">
-            <input type="reset" id="resetButton" name="reset" th:value="Reset"/>
+			</div>
+			
+			<button class="btn btn-md btn-success" type="submit" id="submitButton" th:value="Save">Export XLS</button>
+            <input class="btn btn-md btn-warning" type="reset" id="resetButton" name="reset" th:value="Reset"/>
         </form>
     </div>
 </div>
+<footer class="footer">
+	<div class="container">
+	  <span class="text-muted">MLB Team Builder</span>
+	</div>
+</footer>
 </body>
 </html>
